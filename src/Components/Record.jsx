@@ -24,6 +24,10 @@ const Record = () => {
     { name: "Record 1", id: "id-1", parent: "root", child: [] },
   ]);
 
+  const [shadowList, setShadowList] = useState([
+    { name: "Record 1", id: "id-1", parent: "root", child: [] },
+  ]);
+
   const addRecord = (e) => {
     e.stopPropagation();
     setUserData({
@@ -38,6 +42,8 @@ const Record = () => {
 
   const closeRecord = (e) => {
     e.stopPropagation();
+    a = JSON.parse(JSON.stringify(shadowList))
+    setListToShow(a)
     setIsOpen(false);
   };
 
@@ -69,8 +75,8 @@ const Record = () => {
     e.stopPropagation();
     outPut = [];
 
-    a = JSON.parse(JSON.stringify(listToShow));
-    let b = JSON.parse(JSON.stringify(listToShow));
+    a = JSON.parse(JSON.stringify(shadowList));
+    let b = JSON.parse(JSON.stringify(shadowList));
 
     if (editMode === false) {
       b.push(data);
@@ -78,6 +84,7 @@ const Record = () => {
 
       recursiveMap("root");
       setListToShow(b);
+      setShadowList(b)
 
       const newArr = JSON.parse(JSON.stringify(outPut));
       setMyList(newArr);
@@ -92,6 +99,7 @@ const Record = () => {
       recursiveMap("root");
 
       setListToShow(b);
+      setShadowList(b)
       const newArr = JSON.parse(JSON.stringify(outPut));
       setMyList(newArr);
     }
@@ -100,6 +108,20 @@ const Record = () => {
   };
 
   const editModeFunc = (currData) => {
+
+    ids = [];
+    a = JSON.parse(JSON.stringify(listToShow));
+    setShadowList(a)
+
+
+    recursiveMapDel(currData.id);
+
+    const filteredArray = a.filter((item) => !ids.includes(item.id));
+
+    const newArr = [...filteredArray];
+ 
+    setListToShow(newArr);
+
     setUserData(currData);
     setEditMode(true);
     setIsOpen(true);
@@ -134,6 +156,7 @@ const Record = () => {
     recursiveMap("root");
     const newArr_ = JSON.parse(JSON.stringify(outPut));
     setListToShow(a);
+    setShadowList(a)
     setMyList(newArr_);
   };
 
