@@ -51,10 +51,8 @@ const Modal = ({ data, closeRec, formSubmit, userData: userD, editMode }) => {
             type="text"
             placeholder="Name"
           />
-          {editMode === false && (
-             
+      
             <p>id : {userData.id}</p>
-          )}
           <select
             onChange={selectParent}
             className="input"
