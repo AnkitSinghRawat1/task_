@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Modal.css";
+import { Button } from "@mui/joy";
 
 const Modal = ({ data, closeRec, formSubmit, userData: userD, editMode }) => {
   const [userData, setUserData] = useState(userD);
@@ -63,17 +64,18 @@ const Modal = ({ data, closeRec, formSubmit, userData: userD, editMode }) => {
               Please Select Parent
             </option>
             {data.map((res) => (
-              userData.id != res.id && <option value={res.id}>{res.name}</option>
+              userData.id != res.id && <option value={res.id}>{res.name.length > 25 ? `${res.name.slice(0,25)}...` : res.name}</option>
             ))}
           </select>
           <hr  style={{margin: '20px'}}/>
-          <button
-            disabled={userData.name === "" || userData.parent === "root"}
-            style={{ cursor: "pointer" }}
-            onClick={(e) => submit(e)}
-          >
+       
+            <Button
+             disabled={userData.name === "" || userData.parent === "root"}
+             style={{ cursor: "pointer" }}
+             onClick={(e) => submit(e)}>
+
             Submit
-          </button>
+            </Button>
         </div>
       </div>
     </div>
